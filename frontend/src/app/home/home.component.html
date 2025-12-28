@@ -1,0 +1,187 @@
+<div class="app-container">
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo-branding">
+
+                <div class="branding">
+                    <h1>Rasmi</h1>
+                    <p class="tagline">Écris juste, Écris Formel</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button class="theme-toggle" (click)="toggleDarkMode()" aria-label="Toggle dark mode">
+
+                    <span>{{ isDarkMode ? 'Clair' : 'Sombre' }}</span>
+                </button>
+                <button class="theme-toggle logout-btn" (click)="onLogout()" aria-label="Se déconnecter">
+                    <span>Déconnexion</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+
+            <!-- Form Section -->
+            <section class="form-section" [class.hidden]="emailResult">
+                <div class="section-header">
+                    <h2>Générer votre email académique</h2>
+                    <p>Transformez votre intention en email professionnel en quelques secondes</p>
+                </div>
+
+                <form (ngSubmit)="generateEmail()" class="email-form">
+
+                    <!-- Intention Input -->
+                    <div class="form-group">
+                        <label for="intention">
+                            <span class="label-text">Que voulez-vous dire ?</span>
+                            <span class="label-hint">Décrivez simplement votre intention</span>
+                        </label>
+                        <textarea id="intention" [(ngModel)]="intention" name="intention"
+                            placeholder="Ex: Je voudrais un rendez-vous pour discuter de mon projet de recherche..."
+                            rows="4" required [disabled]="isLoading"></textarea>
+                    </div>
+
+                    <!-- Type Email Selector -->
+                    <div class="form-group">
+                        <label>
+                            <span class="label-text">Type d'email</span>
+                        </label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="typeEmail" value="demande" [(ngModel)]="typeEmail"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Demande</span>
+                                </span>
+                            </label>
+
+                            <label class="radio-option">
+                                <input type="radio" name="typeEmail" value="excuse" [(ngModel)]="typeEmail"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Excuse</span>
+                                </span>
+                            </label>
+
+                            <label class="radio-option">
+                                <input type="radio" name="typeEmail" value="relance" [(ngModel)]="typeEmail"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Relance</span>
+                                </span>
+                            </label>
+
+                            <label class="radio-option">
+                                <input type="radio" name="typeEmail" value="remerciement" [(ngModel)]="typeEmail"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Remerciement</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Formality Level Selector -->
+                    <div class="form-group">
+                        <label>
+                            <span class="label-text">Niveau de formalité</span>
+                        </label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="niveauFormalite" value="faible" [(ngModel)]="niveauFormalite"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Faible</span>
+                                </span>
+                            </label>
+
+                            <label class="radio-option">
+                                <input type="radio" name="niveauFormalite" value="moyen" [(ngModel)]="niveauFormalite"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Moyen</span>
+                                </span>
+                            </label>
+
+                            <label class="radio-option">
+                                <input type="radio" name="niveauFormalite" value="élevé" [(ngModel)]="niveauFormalite"
+                                    [disabled]="isLoading">
+                                <span class="radio-label">
+                                    <span>Élevé</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div class="error-message" *ngIf="error">
+                        {{ error }}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-generate" [disabled]="isLoading || !intention">
+                        <span *ngIf="!isLoading">Générer l'email</span>
+                        <span *ngIf="isLoading" class="loading">
+                            <span class="spinner"></span>
+                            Génération en cours...
+                        </span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Result Section -->
+            <section class="result-section" *ngIf="emailResult">
+                <div class="section-header">
+                    <h2>Votre email est prêt !</h2>
+                    <p>Vous pouvez maintenant le copier ou l'envoyer</p>
+                </div>
+
+                <div class="email-preview">
+                    <div class="email-subject">
+                        <label>Objet :</label>
+                        <p>{{ emailResult.objet }}</p>
+                    </div>
+
+                    <div class="email-body">
+                        <label>Message :</label>
+                        <pre>{{ emailResult.corps }}</pre>
+                    </div>
+                </div>
+
+                <!-- Warning Message -->
+                <div class="warning-message" *ngIf="warningMessage">
+                    <span class="warning-icon">⚠️</span>
+                    {{ warningMessage }}
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" (click)="copyToClipboard()">
+                        <span *ngIf="!copySuccess">Copier</span>
+                        <span *ngIf="copySuccess" class="success">✓ Copié !</span>
+                    </button>
+
+                    <button class="btn btn-primary" (click)="sendViaEmail()">
+                        Envoyer via client mail
+                    </button>
+                </div>
+
+                <!-- Reset Button -->
+                <button class="btn btn-text btn-reset" (click)="reset()">
+                    ← Créer un nouvel email
+                </button>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Rasmi - Générateur d'emails académiques formels</p>
+    </footer>
+</div>

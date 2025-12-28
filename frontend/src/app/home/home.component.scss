@@ -1,0 +1,450 @@
+/* ============================================
+   RASMI – HOME UI (GREEN & WHITE THEME)
+   ============================================ */
+
+/* ---------- Design Tokens ---------- */
+:host {
+    --primary: #059669;
+    /* Emerald 600 */
+    --primary-hover: #047857;
+    /* Emerald 700 */
+    --primary-light: #d1fae5;
+    /* Emerald 100 */
+
+    --red: #ef4444;
+    --yellow: #f59e0b;
+
+    --text-primary: #1e293b;
+    /* Slate 800 */
+    --text-secondary: #64748b;
+    /* Slate 500 */
+    --text-muted: #94a3b8;
+    /* Slate 400 */
+
+    --bg-main: #f8fafc;
+    /* Slate 50 */
+    --bg-card: #ffffff;
+    --bg-input: #f1f5f9;
+    /* Slate 100 */
+
+    --border: #e2e8f0;
+    /* Slate 200 */
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    --transition: 0.2s ease;
+
+    /* Layout */
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-main);
+}
+
+/* ---------- Dark Mode ---------- */
+:host-context(body.dark-mode) {
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+
+    --bg-main: #0f172a;
+    /* Slate 900 */
+    --bg-card: #1e293b;
+    /* Slate 800 */
+    --bg-input: #334155;
+    /* Slate 700 */
+
+    --border: #334155;
+
+    /* Ensure background is updated in dark mode */
+    background: var(--bg-main);
+}
+
+/* ---------- Global ---------- */
+* {
+    box-sizing: border-box;
+}
+
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Background handled by :host */
+    color: var(--text-primary);
+    font-family: 'Inter', 'Google Sans', 'Roboto', sans-serif;
+}
+
+/* ---------- Header ---------- */
+.header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-section {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.branding h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--primary);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.tagline {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ---------- Theme Toggle & Actions ---------- */
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.theme-toggle {
+    border: 1px solid var(--border);
+    background: transparent;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-input);
+}
+
+.logout-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: #fef2f2;
+}
+
+/* ---------- Main ---------- */
+.main-content {
+    flex: 1;
+    padding: 48px 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* ---------- Card Sections ---------- */
+.form-section,
+.result-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Section Header ---------- */
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.section-header p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+/* ---------- Form ---------- */
+.email-form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.label-hint {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
+
+/* ---------- FIXED TEXTAREA ---------- */
+textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 16px;
+    font-size: 16px;
+    font-family: inherit;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    resize: vertical;
+    transition: var(--transition);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+}
+
+/* ---------- Radio Groups ---------- */
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.radio-option input {
+    display: none;
+}
+
+.radio-label {
+    height: 110px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border);
+    background: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.radio-label:hover {
+    border-color: var(--primary);
+    background: var(--bg-input);
+}
+
+.radio-option input:checked+.radio-label {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary-hover);
+}
+
+.radio-icon {
+    font-size: 24px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 14px 28px;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 6px rgba(5, 150, 105, 0.2);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+    background: #a7f3d0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-input);
+    border-color: var(--text-secondary);
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--primary);
+    padding: 8px 16px;
+}
+
+.btn-text:hover {
+    text-decoration: underline;
+}
+
+.btn-generate {
+    width: 100%;
+    margin-top: 16px;
+    font-size: 16px;
+    height: 52px;
+}
+
+/* ---------- Error ---------- */
+.error-message {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ---------- Warning ---------- */
+.warning-message {
+    background: #fef3c7;
+    color: #b45309;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* ---------- Email Preview ---------- */
+.email-preview {
+    background: var(--bg-input);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    margin-top: 24px;
+    border: 1px solid var(--border);
+}
+
+.email-subject {
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+}
+
+.email-subject label,
+.email-body label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.email-subject p {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.email-body pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.btn-reset {
+    margin-top: 24px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+
+    .form-section,
+    .result-section {
+        padding: 24px;
+    }
+
+    .action-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
