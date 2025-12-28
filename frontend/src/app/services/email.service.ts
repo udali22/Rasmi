@@ -18,7 +18,7 @@ export interface EmailResponse {
 })
 export class EmailService {
     // Use the current hostname to determine backend URL (allows testing on mobile)
-    private apiUrl = `http://${window.location.hostname}:8000`;
+    private apiUrl = 'https://rasmi-jlah.onrender.com';
 
     constructor(private http: HttpClient) { }
 
